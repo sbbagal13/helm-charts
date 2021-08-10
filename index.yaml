@@ -3,9 +3,9 @@ entries:
   hive-metastore:
   - apiVersion: v1
     appVersion: 2.3.6
-    created: "2021-08-10T15:41:37.362952769-07:00"
+    created: "2021-08-10T16:00:07.06545084-07:00"
     description: The Apache Hive ™ data warehouse software facilitates reading, writing, and managing large datasets residing in distributed storage using SQL. Structure can be projected onto data already in storage. A command line tool and JDBC driver are provided to connect users to Hive.
-    digest: 851748fc2ff626b998d1246f16ff2eba9ce659503926d8ade29908bb5931e82e
+    digest: 84c2ac1c5792b0e5d6ca27f5b4ff1848d91f27cdb2c08cf805c49a1743b5f996
     home: https://hive.apache.org/
     icon: https://hive.apache.org/images/hive_logo_medium.jpg
     maintainers:
@@ -17,6 +17,6 @@ entries:
     - https://github.com/gradiant/charts
     - https://github.com/big-data-europe/docker-hive
     urls:
-    - https://github.com/sbbagal13/helm-charts.git/hive-metastore-0.0.1.tgz
-    version: 0.0.1
-generated: "2021-08-10T15:41:37.360862816-07:00"
+    - https://github.com/sbbagal13/helm-charts.git/hive-metastore-1.0.0.tgz
+    version: 1.0.0
+generated: "2021-08-10T16:00:07.064053253-07:00"
