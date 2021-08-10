@@ -1,0 +1,97 @@
+# The base hadoop image to use for all components.
+# See this repo for image build details: https://github.com/Comcast/kube-yarn/tree/master/image
+
+postgresql:
+  postgresqlUsername: hive
+  postgresqlPassword: hive
+  postgresqlDatabase: metastore
+  postgresqlHostName: postgresql-ha-pgpool 
+
+image:
+  repository: docker.io/kmisra/hive
+  tag: latest
+  pullPolicy: Always 
+
+resources: {}
+conf:
+  hiveSite:
+    # hive_metastore_uris: thrift://hive-metastore:9083
+    hive.metastore.uris: thrift://hive-metastore:9083
+    hive.metastore.warehouse.dir: s3a://cstonefs-b101064a-f0af-41d8-87ae-2179cdafa32d/data/hive 
+    # if not set, default hive.metastore.warehouse.dir is default to: "hdfs://{{.Release.Name}}-hdfs:8020/user/hive/warehouse"
+    # hive.metastore.warehouse.dir:
+    # Uncomment to enable Atlas 
+    # hive.exec.post.hooks: org.apache.atlas.hive.hook.HiveHook 
+  
+  coreSite:
+    fs.defaultFS: s3a://cstonefs-b101064a-f0af-41d8-87ae-2179cdafa32d
+    fs.s3a.access.key: 59UMG46j803UOP8Cokaf
+    fs.s3a.secret.key: 4eBqZdvh6IS2XvXacSi6EBf3l6uiKTMMzwhiZFwH
+    fs.s3a.endpoint: s3.openshift-storage.svc:80
+    fs.s3a.path.style.access: true
+    fs.s3a.impl: org.apache.hadoop.fs.s3a.S3AFileSystem
+    fs.s3a.connection.ssl.enabled: false
+    hadoop.proxyuser.hive.hosts: "*"
+    hadoop.proxyuser.hive.groups: "*" 
+
+  atlasProp:
+    atlas.graph.storage.backend: hbase2
+    atlas.graph.storage.hbase.table: apache_atlas_janus
+    atlas.graph.storage.hostname: localhost
+    atlas.graph.storage.hbase.regions-per-server: 1
+    atlas.graph.storage.lock.wait-time: 10000
+    atlas.EntityAuditRepository.impl: org.apache.atlas.repository.audit.HBaseBasedAuditRepository
+    atlas.graph.index.search.backend: solr
+    atlas.graph.index.search.solr.mode: cloud
+    atlas.graph.index.search.solr.zookeeper-url: localhost:2181
+    atlas.graph.index.search.solr.zookeeper-connect-timeout: 60000
+    atlas.graph.index.search.solr.zookeeper-session-timeout: 60000
+    atlas.graph.index.search.solr.wait-searcher: true
+    atlas.graph.index.search.max-result-set-size: 150
+    atlas.notification.embedded: true
+    atlas.kafka.data: ${sys:atlas.home}/data/kafka
+    atlas.kafka.zookeeper.connect: 10.36.87.161:2181
+    atlas.kafka.bootstrap.servers: 10.38.0.31:31392
+    atlas.kafka.zookeeper.session.timeout.ms: 400
+    atlas.kafka.zookeeper.connection.timeout.ms: 200
+    atlas.kafka.zookeeper.sync.time.ms: 20
+    atlas.kafka.auto.commit.interval.ms: 1000
+    atlas.kafka.hook.group.id: atlas
+    atlas.kafka.enable.auto.commit: false
+    atlas.kafka.auto.offset.reset: earliest
+    atlas.kafka.session.timeout.ms: 30000
+    atlas.kafka.offsets.topic.replication.factor: 1
+    atlas.kafka.poll.timeout.ms: 1000
+    atlas.notification.create.topics: true
+    atlas.notification.replicas: 1
+    atlas.notification.topics: ATLAS_HOOK,ATLAS_ENTITIES
+    atlas.notification.log.failed.messages: true
+    atlas.notification.consumer.retry.interval: 500
+    atlas.notification.hook.retry.interval: 1000
+    atlas.enableTLS: false
+    atlas.authentication.method.kerberos: false
+    atlas.authentication.method.file: true
+    atlas.authentication.method.ldap.type: none
+    atlas.authentication.method.file.filename: ${sys:atlas.home}/conf/users-credentials.properties
+    atlas.rest.address: http://192.168.66.168:21000
+    atlas.audit.hbase.tablename: apache_atlas_entity_audit
+    atlas.audit.zookeeper.session.timeout.ms: 1000
+    atlas.audit.hbase.zookeeper.quorum: localhost:2181
+    atlas.server.ha.enabled: false
+    atlas.authorizer.impl: simple
+    atlas.authorizer.simple.authz.policy.file: atlas-simple-authz-policy.json
+    atlas.rest-csrf.enabled: true
+    atlas.rest-csrf.browser-useragents-regex: ^Mozilla.*,^Opera.*,^Chrome.*
+    atlas.rest-csrf.methods-to-ignore: GET,OPTIONS,HEAD,TRACE
+    atlas.rest-csrf.custom-header: X-XSRF-HEADER
+    atlas.metric.query.cache.ttlInSecs: 900
+    atlas.search.gremlin.enable: false
+    atlas.ui.default.version: v1
+    atlas.rest.address: http://192.168.66.168:21000
+    atlas.client.type: rest
+    atlas.client.username: admin
+    atlas.client.password: admin
+    atlas.client.ha.retries: 1
+    atlas.hook.hive.synchronous: false # whether to run the hook synchronously. false recommended to avoid delays in Hive query completion. Default: false
+    atlas.hook.hive.numRetries: 3      # number of retries for notification failure. Default: 3
+    atlas.hook.hive.queueSize: 10000   # queue size for the threadpool. Default: 10000
