@@ -3,7 +3,7 @@ entries:
   hive-metastore:
   - apiVersion: v1
     appVersion: 2.3.6
-    created: "2021-08-11T12:41:04.57834523-07:00"
+    created: "2021-08-11T14:11:58.085583622-07:00"
     description: The Apache Hive ™ data warehouse software facilitates reading, writing, and managing large datasets residing in distributed storage using SQL. Structure can be projected onto data already in storage. A command line tool and JDBC driver are provided to connect users to Hive.
     digest: 7625c33cba9ddd605abe5c21eba05fb2f61c626cb22fe71ec03ed182370f8950
     home: https://hive.apache.org/
@@ -19,4 +19,34 @@ entries:
     urls:
     - https://sbbagal13.github.io/helm-charts/hive-metastore-1.0.0.tgz
     version: 1.0.0
-generated: "2021-08-11T12:41:04.575836432-07:00"
+  trino:
+  - apiVersion: v1
+    appVersion: "358"
+    created: "2021-08-11T14:11:58.086352065-07:00"
+    description: High performance, distributed SQL query engine for big data
+    digest: 33f2b5af1d831ef4f72c36253904db14af729b0976781153d12d79b5d8f02531
+    home: https://trino.io
+    icon: https://trino.io/assets/images/trino-logo/trino-ko_tiny-alt.svg
+    keywords:
+    - trino
+    - trinosql
+    - trinodb
+    - presto
+    - prestosql
+    - prestodb
+    - big data
+    - database
+    - sql
+    - query engine
+    - high performance
+    maintainers:
+    - email: sanjay.bagal@gmail.com
+      name: Sanjay Bagal
+    name: trino
+    sources:
+    - https://github.com/sbbagal13/helm-charts
+    - https://github.com/trinodb/trino
+    urls:
+    - https://sbbagal13.github.io/helm-charts/trino-1.2.2.tgz
+    version: 1.2.2
+generated: "2021-08-11T14:11:58.083528133-07:00"
