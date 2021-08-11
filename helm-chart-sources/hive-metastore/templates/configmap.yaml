@@ -12,7 +12,7 @@ data:
     <configuration>
         <property>
           <name>javax.jdo.option.ConnectionURL</name>
-          <value>jdbc:postgresql://{{ .Values.postgresql.postgresqlHost }}/metastore</value>
+          <value>jdbc:postgresql://{{ .Values.postgresql.postgresqlHostName }}/metastore</value>
         </property>
         <property>
           <name>javax.jdo.option.ConnectionDriverName</name>
