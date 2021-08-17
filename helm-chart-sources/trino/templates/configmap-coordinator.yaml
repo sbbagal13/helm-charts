@@ -46,6 +46,15 @@ data:
  {{- if .Values.server.config.allowInsecureOverHTTP }}
     http-server.authentication.allow-insecure-over-http={{ .Values.server.config.allowInsecureOverHTTP }}
 {{- end }}{{- end }}{{- end }}
+    access-control.config-files=access-control.properties
+
+  access-control.properties: |
+    access-control.name=ranger
+    ranger.policy-rest-url=http://ranger-dev.apps.lv-tst01.ocp.c1b/
+    ranger.service-name=ranger
+    ranger.username=svc_bimod_fnbm
+    ranger.password=1GoldBar01!#38WeH
+    ranger.policy-refresh-interval=30s
 
   log.properties: |
     io.trino={{ .Values.server.log.trino.level }}
