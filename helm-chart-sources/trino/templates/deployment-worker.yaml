@@ -36,9 +36,6 @@ spec:
             name: schemas-volume-worker
         - name: data-volume
           emptyDir: {}
-        - name: trino-data
-          persistentVolumeClaim:
-            claimName: data
 
       {{- if .Values.initContainers.worker }}
       initContainers:
@@ -59,8 +56,6 @@ spec:
               name: catalog-volume
             - mountPath: {{ .Values.server.node.dataDir }}
               name: data-volume
-            - mountPath: /data/hive
-              name: trino-data
 
           livenessProbe:
             exec:
