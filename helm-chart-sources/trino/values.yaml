@@ -1,17 +1,25 @@
 image:
-  repository: trinodb/trino
-  tag: 358
+  repository: docker.io/sbagal/trino 
+  tag: dev
   pullPolicy: IfNotPresent
   securityContext:
     runAsUser: 1000
     runAsGroup: 1000
 
 ingress:
-  enabled: true 
+  enabled: false 
   annotations: {}
-  host: "cstone-trino-dev.apps.lv-tst01.ocp.c1b"
+  host: ""
   tls:
-    secretName: "trino-auth"
+    secretName: ""
+
+ranger:
+  serviceName: trino
+  # Ranger URL for Policy Manager e.g. http:<ranger host/service>:<port> 
+  rangerURL: http://ranger:6080
+  # Solr URL for Policy Audit e.g. http://<solr url>/solr/ranger_audits
+  solrURL: http://solr-dev.apps.lv-tst01.ocp.c1b/solr/ranger_audits
+  policyPollIntervalMs: 30000
 
 server:
   workers: 3
