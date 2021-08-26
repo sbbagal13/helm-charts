@@ -3,7 +3,7 @@ entries:
   hive-metastore:
   - apiVersion: v1
     appVersion: 2.3.6
-    created: "2021-08-11T14:11:58.085583622-07:00"
+    created: "2021-08-26T12:55:43.531908322-07:00"
     description: The Apache Hive ™ data warehouse software facilitates reading, writing, and managing large datasets residing in distributed storage using SQL. Structure can be projected onto data already in storage. A command line tool and JDBC driver are provided to connect users to Hive.
     digest: 7625c33cba9ddd605abe5c21eba05fb2f61c626cb22fe71ec03ed182370f8950
     home: https://hive.apache.org/
@@ -19,12 +19,35 @@ entries:
     urls:
     - https://sbbagal13.github.io/helm-charts/hive-metastore-1.0.0.tgz
     version: 1.0.0
+  superset:
+  - apiVersion: v2
+    appVersion: "1.0"
+    created: "2021-08-26T12:55:43.541176699-07:00"
+    dependencies:
+    - condition: postgresql.enabled
+      name: postgresql
+      repository: https://charts.bitnami.com/bitnami
+      version: 10.2.0
+    - condition: redis.enabled
+      name: redis
+      repository: https://charts.bitnami.com/bitnami
+      version: 12.3.0
+    description: Apache Superset is a modern, enterprise-ready business intelligence web application
+    digest: b72e9d2fdbbcb7c5e4f91c8057ab04381f7d70b540e981089dfaf8f2753e5e43
+    maintainers:
+    - email: craig@craigrueda.com
+      name: craig-rueda
+      url: https://github.com/craig-rueda
+    name: superset
+    urls:
+    - https://sbbagal13.github.io/helm-charts/superset-0.1.5.tgz
+    version: 0.1.5
   trino:
   - apiVersion: v1
     appVersion: "358"
-    created: "2021-08-11T14:11:58.086352065-07:00"
+    created: "2021-08-26T12:55:43.542232419-07:00"
     description: High performance, distributed SQL query engine for big data
-    digest: 33f2b5af1d831ef4f72c36253904db14af729b0976781153d12d79b5d8f02531
+    digest: 0784afb7626cb1ddb1b6c19c517ff61dcbf6a5b69e73d31106b1a0b78f2bfe09
     home: https://trino.io
     icon: https://trino.io/assets/images/trino-logo/trino-ko_tiny-alt.svg
     keywords:
@@ -49,4 +72,4 @@ entries:
     urls:
     - https://sbbagal13.github.io/helm-charts/trino-1.2.2.tgz
     version: 1.2.2
-generated: "2021-08-11T14:11:58.083528133-07:00"
+generated: "2021-08-26T12:55:43.529611891-07:00"
