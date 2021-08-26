@@ -49,9 +49,6 @@ spec:
           persistentVolumeClaim:
             claimName: {{ .Values.accessControl.pvcName }}
         {{- end }}{{- end }}
-        - name: data-volume
-          persistentVolumeClaim:
-            claimName: data
 
       {{- if .Values.initContainers.coordinator }}
       initContainers:
@@ -81,8 +78,6 @@ spec:
             - mountPath: {{ .Values.server.config.path }}/access-control
               name: {{ .Values.accessControl.pvcVolumeName | default "access-control-pvc-volume" }}
             {{- end }}{{- end }}
-            - mountPath: {{ .Values.server.node.dataDir }}
-              name: data-volume
 
           ports:
             - name: http-coord
