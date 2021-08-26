@@ -1,0 +1,202 @@
+USER-SUPPLIED VALUES:
+affinity: {}
+bootstrapScript: |
+  #!/bin/bash
+  apt-get update -y &&\
+   apt-get install -y --no-install-recommends nano &&\
+   rm -rf /var/lib/apt/lists/* 
+   pip install psycopg2==2.8.5 redis==3.2.1 sqlalchemy-trino 
+  if [ ! -f ~/bootstrap ]; then echo "Running Superset with uid {{ .Values.runAsUser }}" > ~/bootstrap; fi
+configFromSecret: '{{ template "superset.fullname" . }}-config'
+configMountPath: /app/pythonpath
+configOverrides:
+    enable_oauth: |
+      import os
+      from flask_appbuilder.security.manager import AUTH_LDAP
+
+      AUTH_TYPE = AUTH_LDAP
+      AUTH_LDAP_SERVER = "ldap://lasdc10.fnbm.corp:389"
+      AUTH_LDAP_USE_TLS = False
+      AUTH_ROLE_ADMIN = "Admin"
+      AUTH_LDAP_SEARCH = "dc=fnbm,dc=corp"  
+      AUTH_LDAP_UID_FIELD = "sAMAccountName" 
+      AUTH_LDAP_BIND_USER = "svc_bimod_fnbm" 
+      AUTH_LDAP_BIND_PASSWORD = "1GoldBar01!#38WeH"
+      AUTH_USER_REGISTRATION = True 
+      AUTH_USER_REGISTRATION_ROLE = "Public"
+      AUTH_LDAP_FIRSTNAME_FIELD = "givenName"
+      AUTH_LDAP_LASTNAME_FIELD = "sn"
+      AUTH_LDAP_EMAIL_FIELD = "mail"
+      AUTH_LDAP_GROUP_FIELD = "memberOf"
+      AUTH_ROLES_SYNC_AT_LOGIN = True
+      PERMANENT_SESSION_LIFETIME = 1800
+      AUTH_LDAP_USERNAME_FORMAT = "uid=%s,ou=users,dc=fnbm,dc=corp" 
+      AUTH_ROLES_MAPPING = { "CN=BI,OU=IT_DLs,OU=Distribution_Lists,OU=Las_Vegas,DC=fnbm,DC=corp": ["Admin"], }
+ 
+envFromSecret: '{{ template "superset.fullname" . }}-env'
+extraConfigMap: ca-cert-config
+extraConfigMapMountPath: /etc/cert
+extraConfigMountPath: /app/configs
+extraConfigs: {}
+extraEnv: {}
+extraSecretEnv: {}
+extraSecrets: {}
+image:
+  pullPolicy: Always
+  repository: sbagal/superset
+  tag: latest
+imagePullSecrets: []
+ingress:
+  annotations: {}
+  enabled: false 
+  hosts: {}
+  path: /
+  tls: []
+init:
+  adminUser:
+    email: admin@superset.com
+    firstname: Superset
+    lastname: Admin
+    password: admin
+    username: admin
+  command:
+  - /bin/sh
+  - -c
+  - . {{ .Values.configMountPath }}/superset_bootstrap.sh; . {{ .Values.configMountPath }}/superset_init.sh
+  createAdmin: false 
+  enabled: true
+  initContainers:
+  - command:
+    - /bin/sh
+    - -c
+    - until nc -zv $DB_HOST $DB_PORT -w1; do echo 'waiting for db'; sleep 1; done
+    envFrom:
+    - secretRef:
+        name: '{{ tpl .Values.envFromSecret . }}'
+    image: busybox:latest
+    imagePullPolicy: IfNotPresent
+    name: wait-for-postgres
+  initscript: |-
+    #!/bin/sh
+    echo "Upgrading DB schema..."
+    superset db upgrade
+    echo "Initializing roles..."
+    superset init
+    {{ if .Values.init.createAdmin }}
+    echo "Creating admin user..."
+    superset fab create-admin \
+                    --username {{ .Values.init.adminUser.username }} \
+                    --firstname {{ .Values.init.adminUser.firstname }} \
+                    --lastname {{ .Values.init.adminUser.lastname }} \
+                    --email {{ .Values.init.adminUser.email }} \
+                    --password {{ .Values.init.adminUser.password }} \
+                    || true
+    {{- end }}
+    {{ if .Values.init.loadExamples }}
+    echo "Loading examples..."
+    superset load_examples
+    {{- end }}
+  loadExamples: false
+  resources: {}
+nodeSelector: {}
+postgresql:
+  enabled: true
+  existingSecret: null
+  existingSecretKey: postgresql-password
+  persistence:
+    accessModes:
+    - ReadWriteOnce
+    enabled: true
+  postgresqlDatabase: superset
+  postgresqlPassword: superset
+  postgresqlUsername: superset
+  service:
+    port: 5432
+redis:
+  cluster:
+    enabled: false
+  enabled: true
+  existingSecret: null
+  existingSecretKey: redis-password
+  master:
+    persistence:
+      accessModes:
+      - ReadWriteOnce
+      enabled: false
+  password: superset
+  usePassword: false
+replicaCount: 1
+resources: {}
+runAsUser: 1001
+service:
+  annotations: {}
+  loadBalancerIP: null
+  port: 8088
+  type: ClusterIP
+supersetCeleryBeat:
+  command:
+  - /bin/sh
+  - -c
+  - . {{ .Values.configMountPath }}/superset_bootstrap.sh; celery --app=superset.tasks.celery_app:app beat --pidfile /tmp/celerybeat.pid --schedule /tmp/celerybeat-schedule
+  deploymentAnnotations: {}
+  enabled: false
+  forceReload: false
+  initContainers:
+  - command:
+    - /bin/sh
+    - -c
+    - until nc -zv $DB_HOST $DB_PORT -w1; do echo 'waiting for db'; sleep 1; done
+    envFrom:
+    - secretRef:
+        name: '{{ tpl .Values.envFromSecret . }}'
+    image: busybox:latest
+    imagePullPolicy: IfNotPresent
+    name: wait-for-postgres
+  podAnnotations: {}
+supersetNode:
+  command:
+  - /bin/sh
+  - -c
+  - . {{ .Values.configMountPath }}/superset_bootstrap.sh; /usr/bin/docker-entrypoint.sh
+  connections:
+    db_host: '{{ template "superset.fullname" . }}-postgresql'
+    db_name: superset
+    db_pass: superset
+    db_port: "5432"
+    db_user: superset
+    redis_host: '{{ template "superset.fullname" . }}-redis-headless'
+    redis_port: "6379"
+  deploymentAnnotations: {}
+  forceReload: false
+  initContainers:
+  - command:
+    - /bin/sh
+    - -c
+    - until nc -zv $DB_HOST $DB_PORT -w1; do echo 'waiting for db'; sleep 1; done
+    envFrom:
+    - secretRef:
+        name: '{{ tpl .Values.envFromSecret . }}'
+    image: busybox:latest
+    imagePullPolicy: IfNotPresent
+    name: wait-for-postgres
+  podAnnotations: {}
+supersetWorker:
+  command:
+  - /bin/sh
+  - -c
+  - . {{ .Values.configMountPath }}/superset_bootstrap.sh; celery --app=superset.tasks.celery_app:app worker
+  deploymentAnnotations: {}
+  forceReload: false
+  initContainers:
+  - command:
+    - /bin/sh
+    - -c
+    - until nc -zv $DB_HOST $DB_PORT -w1; do echo 'waiting for db'; sleep 1; done
+    envFrom:
+    - secretRef:
+        name: '{{ tpl .Values.envFromSecret . }}'
+    image: busybox:latest
+    imagePullPolicy: IfNotPresent
+    name: wait-for-postgres
+  podAnnotations: {}
+tolerations: []
