@@ -1,6 +1,6 @@
 image:
   repository: docker.io/sbagal/trino 
-  tag: dev
+  tag: tagsync1 
   pullPolicy: IfNotPresent
   securityContext:
     runAsUser: 1000
@@ -14,7 +14,7 @@ ingress:
     secretName: ""
 
 ranger:
-  serviceName: trino
+  serviceName: trino_rdbms
   # Ranger URL for Policy Manager e.g. http:<ranger host/service>:<port> 
   rangerURL: http://ranger:6080
   # Solr URL for Policy Audit e.g. http://<solr url>/solr/ranger_audits
@@ -29,7 +29,7 @@ server:
     pluginDir: /usr/lib/trino/plugin
   log:
     trino:
-      level: INFO
+      level: DEBUG 
   config:
     path: /etc/trino
     http:
@@ -160,25 +160,47 @@ connectors:
       hive.s3.ssl.enabled=false
       hive.metastore.thrift.impersonation.enabled=true
 
-    sqlserverdb.properties: |-
+    applicationstarschema.properties: |-
      connector.name=sqlserver
      connection-url=jdbc:sqlserver://LASETLTST01.fnbm.corp:1433;database=ApplicationStarSchema
      connection-user=bi_test
      connection-password=icBN1nmGUku2uAICE79q
 
-    sqldbtableaureportprocessing.properties: |-
+    caretreatment.properties: |-
+     connector.name=sqlserver
+     connection-url=jdbc:sqlserver://LASETLTST01.fnbm.corp:1433;database=CareTreatment
+     connection-user=bi_test
+     connection-password=icBN1nmGUku2uAICE79q
+
+    tableaureportprocessing.properties: |-
      connector.name=sqlserver
      connection-url=jdbc:sqlserver://LASETLTST01.fnbm.corp:1433;database=TableauReportProcessing
      connection-user=bi_test
      connection-password=icBN1nmGUku2uAICE79q
 
-    oraclecasts06.properties: |-
+    marketingproducts.properties: |-
+     connector.name=sqlserver
+     connection-url=jdbc:sqlserver://LASETLTST01.fnbm.corp:1433;database=MarketingProducts
+     connection-user=bi_test
+     connection-password=icBN1nmGUku2uAICE79q
+
+    marketingproductsprocessing.properties: |-
+     connector.name=sqlserver
+     connection-url=jdbc:sqlserver://LASETLTST01.fnbm.corp:1433;database=MarketingProductsProcessing
+     connection-user=bi_test
+     connection-password=icBN1nmGUku2uAICE79q
+
+    casts06.properties: |-
      connector.name=oracle
      connection-url=jdbc:oracle:thin:@ORACASTST06.fnbm.corp:1521/CASTS06
      connection-user=caps
      connection-password=ctst
 
-
+    kornerstone.properties: |-
+     connector.name=postgresql
+     connection-url=jdbc:postgresql://laspgtst01.fnbm.corp:5432/kornerstone
+     connection-user=cornerstone
+     connection-password=cornerstone
 
 schemas: {}
   # Custom schemas that will be mounted in /etc/trino/schemas
