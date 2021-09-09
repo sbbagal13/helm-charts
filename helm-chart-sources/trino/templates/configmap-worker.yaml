@@ -214,11 +214,11 @@ data:
 
         <property>
             <name>xasecure.audit.log4j.is.enabled</name>
-            <value>false</value>
+            <value>true</value>
         </property>
         <property>
             <name>xasecure.audit.log4j.is.async</name>
-            <value>false</value>
+            <value>true</value>
         </property>
         <property>
             <name>xasecure.audit.log4j.async.max.queue.size</name>
