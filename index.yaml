@@ -3,7 +3,7 @@ entries:
   flink:
   - apiVersion: v1
     appVersion: 1.11.2
-    created: "2021-09-09T15:26:28.971486236-07:00"
+    created: "2021-09-15T14:55:19.096011881-07:00"
     dependencies:
     - condition: zookeeper.enabled
       name: zookeeper
@@ -22,7 +22,7 @@ entries:
   hive-metastore:
   - apiVersion: v1
     appVersion: 2.3.6
-    created: "2021-09-09T15:26:28.97333751-07:00"
+    created: "2021-09-15T14:55:19.097761136-07:00"
     description: The Apache Hive ™ data warehouse software facilitates reading, writing, and managing large datasets residing in distributed storage using SQL. Structure can be projected onto data already in storage. A command line tool and JDBC driver are provided to connect users to Hive.
     digest: 7625c33cba9ddd605abe5c21eba05fb2f61c626cb22fe71ec03ed182370f8950
     home: https://hive.apache.org/
@@ -41,7 +41,7 @@ entries:
   superset:
   - apiVersion: v2
     appVersion: "1.0"
-    created: "2021-09-09T15:26:28.982601524-07:00"
+    created: "2021-09-15T14:55:19.108001096-07:00"
     dependencies:
     - condition: postgresql.enabled
       name: postgresql
@@ -52,7 +52,7 @@ entries:
       repository: https://charts.bitnami.com/bitnami
       version: 12.3.0
     description: Apache Superset is a modern, enterprise-ready business intelligence web application
-    digest: b72e9d2fdbbcb7c5e4f91c8057ab04381f7d70b540e981089dfaf8f2753e5e43
+    digest: 16dceb9a748da7a08d99b14fedaf02f0e4e124c41f325c5e174be7b37f4b1986
     maintainers:
     - email: craig@craigrueda.com
       name: craig-rueda
@@ -64,9 +64,9 @@ entries:
   trino:
   - apiVersion: v1
     appVersion: "358"
-    created: "2021-09-09T15:26:28.984191219-07:00"
+    created: "2021-09-15T14:55:19.109330829-07:00"
     description: High performance, distributed SQL query engine for big data
-    digest: 93d84f11a78b540909e243c7d82e0691c050332d3e137e17dd6ec4f5a1c4f74a
+    digest: 5f25c71533392e680495ed370af582058da6e38b92d787b9f211b2c0a4c3890e
     home: https://trino.io
     icon: https://trino.io/assets/images/trino-logo/trino-ko_tiny-alt.svg
     keywords:
@@ -91,4 +91,4 @@ entries:
     urls:
     - https://sbbagal13.github.io/helm-charts/trino-1.2.2.tgz
     version: 1.2.2
-generated: "2021-09-09T15:26:28.967628276-07:00"
+generated: "2021-09-15T14:55:19.09227304-07:00"
