@@ -32,6 +32,12 @@ configOverrides:
       PERMANENT_SESSION_LIFETIME = 1800
       AUTH_LDAP_USERNAME_FORMAT = "uid=%s,ou=users,dc=fnbm,dc=corp" 
       AUTH_ROLES_MAPPING = { "CN=BI,OU=IT_DLs,OU=Distribution_Lists,OU=Las_Vegas,DC=fnbm,DC=corp": ["Admin"], }
+
+    pool_conf: |
+
+      SQLALCHEMY_POOL_SIZE = 45
+      SQLALCHEMY_MAX_OVERFLOW = 30
+      SQLALCHEMY_POOL_TIMEOUT = 180
  
 envFromSecret: '{{ template "superset.fullname" . }}-env'
 extraConfigMap: ca-cert-config
