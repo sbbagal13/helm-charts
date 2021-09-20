@@ -3,7 +3,7 @@ entries:
   flink:
   - apiVersion: v1
     appVersion: 1.11.2
-    created: "2021-09-15T14:55:19.096011881-07:00"
+    created: "2021-09-20T13:37:52.034968247-07:00"
     dependencies:
     - condition: zookeeper.enabled
       name: zookeeper
@@ -22,9 +22,9 @@ entries:
   hive-metastore:
   - apiVersion: v1
     appVersion: 2.3.6
-    created: "2021-09-15T14:55:19.097761136-07:00"
+    created: "2021-09-20T13:37:52.036068418-07:00"
     description: The Apache Hive ™ data warehouse software facilitates reading, writing, and managing large datasets residing in distributed storage using SQL. Structure can be projected onto data already in storage. A command line tool and JDBC driver are provided to connect users to Hive.
-    digest: 7625c33cba9ddd605abe5c21eba05fb2f61c626cb22fe71ec03ed182370f8950
+    digest: 08fd9fa618efb50242e85933ed27d92675309aa61c27ba4451ff782d0b8c6f13
     home: https://hive.apache.org/
     icon: https://hive.apache.org/images/hive_logo_medium.jpg
     maintainers:
@@ -41,7 +41,7 @@ entries:
   superset:
   - apiVersion: v2
     appVersion: "1.0"
-    created: "2021-09-15T14:55:19.108001096-07:00"
+    created: "2021-09-20T13:37:52.044168706-07:00"
     dependencies:
     - condition: postgresql.enabled
       name: postgresql
@@ -64,7 +64,7 @@ entries:
   trino:
   - apiVersion: v1
     appVersion: "358"
-    created: "2021-09-15T14:55:19.109330829-07:00"
+    created: "2021-09-20T13:37:52.044964103-07:00"
     description: High performance, distributed SQL query engine for big data
     digest: 5f25c71533392e680495ed370af582058da6e38b92d787b9f211b2c0a4c3890e
     home: https://trino.io
@@ -91,4 +91,4 @@ entries:
     urls:
     - https://sbbagal13.github.io/helm-charts/trino-1.2.2.tgz
     version: 1.2.2
-generated: "2021-09-15T14:55:19.09227304-07:00"
+generated: "2021-09-20T13:37:52.032138959-07:00"

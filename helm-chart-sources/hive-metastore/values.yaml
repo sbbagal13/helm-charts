@@ -8,9 +8,15 @@ postgresql:
   postgresqlHostName: postgresql-ha-pgpool 
 
 image:
+  #repository: bde2020/hive
   repository: docker.io/kmisra/hive
+  #tag: 2.3.2-postgresql-metastore
   tag: latest
+  #repository: herbertpinpinc1b/hive-meta-sb1
+  #tag: latest
   pullPolicy: Always 
+
+s3Secret: cstonefs
 
 resources: {}
 conf:
@@ -25,8 +31,7 @@ conf:
   
   coreSite:
     fs.defaultFS: s3a://cstonefs-b101064a-f0af-41d8-87ae-2179cdafa32d
-    fs.s3a.access.key: 59UMG46j803UOP8Cokaf
-    fs.s3a.secret.key: 4eBqZdvh6IS2XvXacSi6EBf3l6uiKTMMzwhiZFwH
+    fs.s3a.aws.credentials.provider: com.amazonaws.auth.EnvironmentVariableCredentialsProvider
     fs.s3a.endpoint: s3.openshift-storage.svc:80
     fs.s3a.path.style.access: true
     fs.s3a.impl: org.apache.hadoop.fs.s3a.S3AFileSystem
