@@ -3,7 +3,7 @@ entries:
   flink:
   - apiVersion: v1
     appVersion: 1.11.2
-    created: "2021-09-20T13:37:52.034968247-07:00"
+    created: "2021-09-21T10:38:09.832093813-07:00"
     dependencies:
     - condition: zookeeper.enabled
       name: zookeeper
@@ -19,10 +19,34 @@ entries:
     urls:
     - https://sbbagal13.github.io/helm-charts/flink-0.2.0.tgz
     version: 0.2.0
+  hbase:
+  - apiVersion: v1
+    appVersion: 2.0.1
+    created: "2021-09-21T10:38:09.835952033-07:00"
+    dependencies:
+    - condition: hdfs.enabled
+      name: hdfs
+      repository: https://gradiant.github.io/charts
+      version: ~0.1.10
+    - condition: zookeeper.enabled
+      name: zookeeper
+      repository: https://charts.bitnami.com/bitnami
+      version: ~6.3.0
+    description: HBase is an open-source non-relational distributed database modeled after Google's Bigtable and written in Java.
+    digest: 53bd49a7c21c506aa9418a34b468086495a0cdb820b5ed54aa2abae09cc281b5
+    home: https://hbase.apache.org/
+    icon: http://hbase.apache.org/images/hbase_logo_with_orca.png
+    maintainers:
+    - email: cgiraldo@gradiant.org
+      name: cgiraldo
+    name: hbase
+    urls:
+    - https://sbbagal13.github.io/helm-charts/hbase-0.1.6.tgz
+    version: 0.1.6
   hive-metastore:
   - apiVersion: v1
     appVersion: 2.3.6
-    created: "2021-09-20T13:37:52.036068418-07:00"
+    created: "2021-09-21T10:38:09.837243665-07:00"
     description: The Apache Hive ™ data warehouse software facilitates reading, writing, and managing large datasets residing in distributed storage using SQL. Structure can be projected onto data already in storage. A command line tool and JDBC driver are provided to connect users to Hive.
     digest: 08fd9fa618efb50242e85933ed27d92675309aa61c27ba4451ff782d0b8c6f13
     home: https://hive.apache.org/
@@ -41,7 +65,7 @@ entries:
   superset:
   - apiVersion: v2
     appVersion: "1.0"
-    created: "2021-09-20T13:37:52.044168706-07:00"
+    created: "2021-09-21T10:38:09.845838122-07:00"
     dependencies:
     - condition: postgresql.enabled
       name: postgresql
@@ -64,7 +88,7 @@ entries:
   trino:
   - apiVersion: v1
     appVersion: "358"
-    created: "2021-09-20T13:37:52.044964103-07:00"
+    created: "2021-09-21T10:38:09.846756922-07:00"
     description: High performance, distributed SQL query engine for big data
     digest: 5f25c71533392e680495ed370af582058da6e38b92d787b9f211b2c0a4c3890e
     home: https://trino.io
@@ -91,4 +115,4 @@ entries:
     urls:
     - https://sbbagal13.github.io/helm-charts/trino-1.2.2.tgz
     version: 1.2.2
-generated: "2021-09-20T13:37:52.032138959-07:00"
+generated: "2021-09-21T10:38:09.828028697-07:00"
