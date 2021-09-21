@@ -1,0 +1,9 @@
+dependencies:
+- name: hdfs
+  repository: https://gradiant.github.io/charts
+  version: 0.1.10
+- name: zookeeper
+  repository: https://charts.bitnami.com/bitnami
+  version: 6.3.0
+digest: sha256:f50f70a7c0e8f780c37e11f89d15f2289db72c56dbd2824cf858432d94bcc46e
+generated: "2021-01-11T15:48:13.547216889Z"
